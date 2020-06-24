@@ -1,0 +1,66 @@
+<div class="page-content infinite-scroll" style="margin-top: 44px">
+    <div class="content-block-title">Cartera</div>
+
+
+    <div style="width: 90%; margin: 0 auto; border-bottom: solid 2px #c8c7cc;">
+        <div class="list-block" style="margin: 0px;">
+            <div class="content-block-inner" style="text-align: center;">Selecciona un rango de fechas</div>
+            <div class="item-content">
+                <div class="label" style="margin-right: 10px">Desde: </div>
+                <div class="item-input">
+                    <input type="date" id="fecha1_cartera" value="">
+                </div>
+
+
+                <div class="label" style="margin-right: 10px">Hasta: </div>
+                <div class="item-input">
+                    <input type="date" id="fecha2_cartera" value="">
+                </div>
+
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <button style="border-radius: 0;width: 100%;line-height: inherit; padding: 5px 10px; height:auto; margin: 10px;" class="button button-big button-fill color-blue" onclick="consulta_cartera_chofer();" >Consultar</button>  
+            </div>
+        </div>
+    </div>
+
+    <div class="list-block">
+        <!-- First group-->
+        <div class="list-group">
+            <ul>
+                <li class="list-group-title" style="background-color: rgba(202, 74, 162, 0.68); color: black; font-weight: bold;">Monto total de viajes</li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title"></div>
+                        <div class="item-after" id="label_monto_total_viajes"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="list-group">
+            <ul>
+                <li class="list-group-title" style="background-color: rgba(255, 0, 0, 0.51); color: black; font-weight: bold;">Comisiones (<span id="porcentaje_comision_cartera"></span>)</li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title"></div>
+                        <div class="item-after" id="label_comisiones"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="list-group">
+            <ul>
+                <li class="list-group-title" style="background-color: rgba(0, 128, 0, 0.61); color: black; font-weight: bold;">Resto total</li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title"></div>
+                        <div class="item-after" id="label_resto_total"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>                  
+</div>

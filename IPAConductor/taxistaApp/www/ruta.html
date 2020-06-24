@@ -1,0 +1,47 @@
+
+<div style="position: absolute;top: 44px;bottom: 44px;width: 100%;" id="map">
+    
+</div>
+<div class="list-block" style="margin: 0 !important; position: absolute;bottom: 0; width: 100%">
+  <a href="#" data-picker=".picker-1" class="open-picker"><button style="width: 100%; border-radius: 0px" class="button button-big button-fill color-lightblue">Ver direcciones</button></a>
+</div>
+
+<script type="text/javascript" src="js/mapsAmigo.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjGHdi53xmyV8C4zP3vPBp-NVYZiAKJFk&callback=initMap"></script>
+
+<div class="picker-modal picker-1" style="height: auto">
+    <div class="toolbar">
+      <div class="toolbar-inner">
+        <div class="left"></div>
+        <div class="right"><a href="#" class="close-picker">Done</a></div>
+      </div>
+    </div>
+    <div class="picker-modal-inner">
+      <div class="list-block" style="margin: 0 !important;">
+         <div class="content-block-title" style=" padding: 10px 0px 10px 0px !important;">Dirección</div>
+          <ul id="direcciones">
+            <li>
+              <div class="item-content">
+                <div class="item-inner" style="background: #f2f2f2; color: #000">
+                  <div class="item-title label" style="font-weight: bold; width: 87px;">Calle</div>
+                  <div class="item-input">
+                    <input type="text" id="ubicacion" name="ubicacion">
+                  </div>
+                </div>
+              </div>
+            </li>
+            
+            <li>
+              <div class="item-content">
+                <div class="item-inner" style="background: #f2f2f2; color: #000">
+                  <div class="item-title label" style="font-weight: bold; width: 87px">Colonia</div>
+                  <div class="item-input">
+                    <input type="text" id="destino" name="destino">
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+      </div>
+  </div>
+</div>

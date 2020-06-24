@@ -1,0 +1,76 @@
+<div class="content-block-title">IPA Conductor</div>
+<div class="list-block" style="padding-top: 34px">
+    <ul class="list_menu">
+        <li onclick='opcion_menu("opcion1");' class="accordion-item" style="padding: 7px 7px 7px 7px">
+            <a href="#" class="item-content close-panel">
+                <div class="item-media"><i class="icon f7-icons">compass</i></div>
+                <div class="item-inner">
+                    <div class="item-title">Inicio</div>
+                </div>
+            </a>
+        </li>
+
+        <li onclick='opcion_menu("opcion2");' class="accordion-item" style="padding: 7px 7px 7px 7px">
+            <a href="#" class="item-content close-panel">
+                <div class="item-media"><i class="icon f7-icons">paper_plane_fill</i></div>
+                <div class="item-inner">
+                    <div class="item-title">Historial de viajes</div>
+                </div>
+            </a>
+        </li>
+
+        <li onclick='opcion_menu("opcion3");' class="accordion-item" style="padding: 7px 7px 7px 7px">
+            <a href="#" class="item-content close-panel">
+                <div class="item-media"><i class="icon f7-icons">money_dollar</i></div>
+                <div class="item-inner">
+                    <div class="item-title">Mi cartera</div>
+                </div>
+            </a>
+        </li>
+
+
+
+
+        <li class="accordion-item" style="padding: 7px 7px 7px 7px">
+            <a href="#" class="item-link item-content">
+                <div class="item-media"><i class="icon f7-icons">settings</i></div>
+                <div class="item-inner">
+                    <div class="item-title">Configuración</div>
+                </div>
+            </a>
+            <div class="accordion-item-content list_sub_menu">
+                <div class="content-block" style="padding: 0;">
+                    <ul>
+                        <li onclick='opcion_menu("opcion4"); consulta_datos_chofer();' class="accordion-item" style="padding: 7px 7px 7px 7px">
+                            <a href="#" class="item-content close-panel">
+                                <div class="item-media"><i class="f7-icons">person</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title">Perfil</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li onclick='opcion_menu("opcion5"); consulta_datos_cuenta_bancaria();' class="accordion-item">
+                            <a href="#" class="item-media close-panel">
+                                <div class="item-media"><i class="f7-icons">card</i></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row">
+                                        <div class="item-title">Cuenta bancaria</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+        <li onclick="closeSession()" class="accordion-item" style="padding: 7px 7px 7px 7px">
+            <a href="#" class="item-content">
+                <div class="item-media"><i class="icon f7-icons">logout</i></div>
+                <div class="item-inner">
+                    <div class="item-title">Cerrar sesión</div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

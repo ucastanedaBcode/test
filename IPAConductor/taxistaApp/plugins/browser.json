@@ -1,0 +1,37 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.bcode.taxistaApp"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.bcode.taxistaApp"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.bcode.taxistaApp"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.bcode.taxistaApp"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.bcode.taxistaApp"
+        },
+        "org.apache.cordova.media": {
+            "PACKAGE_NAME": "com.bcode.taxistaApp"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.bcode.taxistaApp"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.bcode.taxistaApp"
+        }
+    }
+}

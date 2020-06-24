@@ -1,0 +1,79 @@
+ <div class="statusbar-overlay"></div>
+
+<!-- Panels overlay-->
+<div class="panel-overlay"></div>
+<!-- Left panel with reveal effect-->
+<div class="panel panel-left panel-reveal" id="menu" style="background: #f2f2f2; border-right: 1px solid #c2c2c2">
+    
+</div>
+
+<!-- Views -->
+<div class="views" style="max-width: 44px 0 0 0">
+    <!-- Your main view, should have "view-main" class -->
+    
+  <div class="view view-main">
+      <div class="navbar">
+          <div class="navbar-inner">
+              <div class="left"> <a href="#" class="link icon-only open-panel"><i class="f7-icons color-black">bars</i></a></div>
+              <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+              <div class="right"></div>
+        </div>
+      </div> 
+
+<div id="estado" style="margin: 114px 20px 0px 20px">
+      <p style="width: 100%;text-align: center;font-size: 18px">Solicitando servicio...</p>
+      <p style="width: 100%;text-align: center;font-size: 14px">Espere por favor.</p>
+      <p><span class="progressbar-infinite" style="height: 5px"></span></p>
+</div>
+<div style="width: 100%;justify-content: center;display: flex;">
+    <a href="#" class="confirm-ok-cancel">
+    <button class="button button-big button-fill color-red">Cancelar</button>
+    </a>
+</div>
+
+<script type="text/javascript">
+////BORRAR DESPUÉS
+setTimeout('pedir()',5000);
+function pedir(){
+  $( "#pedirTaxi" ).load( "encamino.html" );
+}
+
+
+$( document ).ready(function() {
+          $( "#menu" ).load( "menu.html" );
+          //alert(ubicacionReal);
+          //alert(destinoReal);
+      });
+  $('.confirm-ok-cancel').on('click', function () {
+    myApp.modal({
+    title:  'Cancelar servicio',
+    text: '¿Estás seguro que deseas cancelar el servicio?',
+    buttons: [
+      {
+        text: 'No',
+        onClick: function() {
+         
+        }
+      },
+      {
+        text: 'Si',
+        onClick: function() {
+          myApp.modal({
+            title:  'Cancelando servicio',
+            text: 'Tu servicio solicitado será cancelado en breve',
+            buttons: [
+              {
+                text: 'Ok',
+                onClick: function() {
+                  $( "#pedirTaxi" ).load( "cancelado.html" );
+                }
+              }
+            ]
+          })
+        }
+      },
+     
+    ]
+  })
+});
+</script>

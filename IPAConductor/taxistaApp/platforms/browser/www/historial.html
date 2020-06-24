@@ -1,0 +1,53 @@
+<div class="page-content infinite-scroll">
+    <div class="content-block" id="contenido_pagina" style="padding: 0; margin: 0px 0px 0px 0px;">
+        <div class="content-block-title">Historial de viajes</div>
+
+        <div style="width: 90%; margin: 0 auto; border-bottom: solid 2px #c8c7cc;">
+            <div class="list-block" style="margin: 0px;">
+                <div class="content-block-inner" style="text-align: center;">Selecciona un rango de fechas</div>
+                <div class="item-content">
+                    <div class="label" style="margin-right: 10px">Desde: </div>
+                    <div class="item-input">
+                        <input type="date" id="fecha1_historial" value="">
+                    </div>
+
+
+                    <div class="label" style="margin-right: 10px">Hasta: </div>
+                    <div class="item-input">
+                        <input type="date" id="fecha2_historial" value="">
+                    </div>
+
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <button style="border-radius: 0;width: 100%;line-height: inherit; padding: 5px 10px; height:auto; margin: 10px;" class="button button-big button-fill color-blue" onclick="consulta_viajes_chofer();" >Consultar</button>  
+                </div>
+            </div>
+        </div>
+
+        <div class="data-table data-table-init card">
+            <!--            <div class="card-header" style="padding: 0px">
+                            <div class="data-table-title"></div>
+                            <div class="data-table-actions" style="display: flex; align-items: center;">
+                                <div class="">Filtros</div>
+                                <a class="link icon-only"><i class="icon f7-icons">sort</i></a>
+                            </div>
+                        </div>-->
+            <div class="card-content">
+                <table style="text-align: center; width: 100%">
+                    <thead>
+                        <tr style="background: #f2f2f2">
+                            <th class="label-cell sortable-cell sortable-active">Fecha</th>
+                            <th class="numeric-cell sortable-cell">Hora salida</th>
+                            <th class="numeric-cell sortable-cell">Hora llegada</th>
+                            <th class="numeric-cell sortable-cell">Costo</th>
+                            <th class="numeric-cell sortable-cell">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl_body_traslados">
+
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+    </div>
+</div>

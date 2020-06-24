@@ -1,0 +1,80 @@
+<div style="position: absolute;top: 44px;bottom:88px;width: 100%;" id="map">
+
+
+
+</div>
+
+<img src="img/loading.gif" id="img_loading_map" style="position: absolute; left: 40%; bottom: 50%; width: 80px;">
+
+<button onclick="modal_cancelar_servicio()"
+        class="button button-big" 
+        id="btn_cancelar_servicio"
+        style="left: 47px; bottom: 112px; height: 75px; width: 150px; position: fixed; z-index: 2147483647; 
+        background-color: rgba(255, 0, 4, 1); border-color: rgba(255, 0, 4, 1); color: white; 
+        display: none;">
+    Cancelar
+</button>
+<button onclick="terminar_servicio()"
+        class="button button-big" 
+        id="btn_terminar_servicio"
+        style="right: 47px; bottom: 112px; height: 75px; width: 150px; position: fixed; z-index: 2147483647; 
+        background-color: rgba(235, 12, 0, 1); border-color: rgba(235, 12, 0, 1); color: white; 
+        display: none;">
+    Terminar
+</button>
+<button onclick="recoger_cliente()"
+        class="button button-big" 
+        id="btn_recoger_cliente"
+        style="right: 47px; bottom: 112px; height: 75px; width: 150px; position: fixed; z-index: 2147483647; 
+        background-color: rgba(0, 136, 255, 1); border-color: rgba(0, 136, 255, 1); color: white; 
+        display: none;">
+    Recoger cliente
+</button>
+<button onclick="cambiar_estado_a_ocupado()"
+        class="button button-big" 
+        id="btn_ocupado"
+        style="right: 47px; bottom: 112px; height: 75px; width: 178px; position: fixed; z-index: 2147483647; 
+        background-color: rgba(255, 66, 69, 1); border-color: rgba(255, 66, 69, 1); color: white; 
+        display: block;">
+    Cambiar a Ocupado0
+</button>
+<button onclick="cambiar_estado_a_libre()"
+        class="button button-big" 
+        id="btn_libre"
+        style="right: 47px; bottom: 112px; height: 75px; width: 178px; position: fixed; z-index: 2147483647; 
+        background-color: rgba(76, 217, 100, 1); border-color:rgba(76, 217, 100, 1); color: white; 
+        display: none;">
+    Cambiar a libre
+</button>
+
+
+<div id="respuesta"></div>
+
+<div class="list-block" style="margin: 0 !important; position: absolute;bottom: 0; width: 100%">
+
+    <div class="content-block-title">Direcciones</div>
+    <ul id="direcciones">
+        <li>
+            <div class="item-content">
+                <div class="item-inner" style="background: #f2f2f2; color: #000">
+                    <div class="item-title label" style="font-weight: bold; width: 87px">Destino</div>
+                    <img src="icon/destino.png" style="width: 25px;">
+                    <div class="item-input">
+                        <!--<textarea id="txt_destino" name="txt_destino" disabled="disabled" rows="1"></textarea>-->
+                        <input type="text" id="txt_destino" name="txt_destino" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+
+</div>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjGHdi53xmyV8C4zP3vPBp-NVYZiAKJFk&callback=initMap"></script>
+
+<script>
+    $(document).ready(function(){
+
+    });
+</script>

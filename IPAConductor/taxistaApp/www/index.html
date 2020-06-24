@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Geolocation</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">    
+
+        <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+        <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/framework7-icons.css">
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+        <script type="text/javascript" src="js/my-app.js"></script>
+        <!--<script type="text/javascript" src="js/login.js"></script>-->
+        <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                if(localStorage.user!==undefined && localStorage.user!=="" && localStorage.pass!==undefined && localStorage.pass!==""){
+                    document.getElementById("txt_user_login").value=localStorage.user;
+                    document.getElementById("txt_pass_login").value=localStorage.pass;
+                    login();
+                }
+            });
+
+            function login() {
+                myApp.showPreloader("Verificando...");
+                if (document.getElementById("txt_user_login").value.trim() === "" || document.getElementById("txt_pass_login").value.trim() === "") {
+                    document.getElementById("div_error").style.display = "block";
+                    document.getElementById("label_error").innerHTML = "Ingresa el usuario y la contraseña";
+                    myApp.hidePreloader();
+                } else {
+
+                    $.ajax({
+                        url: "http://bcodemexico.com/taxiApp/Taxistas/login.php",
+                        type: 'POST',
+                        data: "user=" + document.getElementById("txt_user_login").value + "&pass=" + document.getElementById("txt_pass_login").value,
+                        dataType: 'json',
+                        success: function (data, textStatus, jqXHR) {
+                            if (data[0].existe.trim() === "si") {
+                                myApp.hidePreloader();
+                                if (data[0].estatus === "Registro") {
+                                    myApp.alert("Tu solicitud de registro sigue en espera de ser autorizada", "Proceso");
+                                } else if (data[0].estatus === "Rechazado") {
+                                    myApp.alert("Tu solicitud de registro ha sido rechazada", "Proceso");
+                                } else if (data[0].estatus === "Inactivo") {
+                                    myApp.alert("Tu cuenta esta inactiva, para reactivarla comunicate con la central", "Cuenta");
+                                } else if (data[0].estatus === "Sancionado") {
+                                    localStorage.user = document.getElementById("txt_user_login").value;
+                                    localStorage.pass = document.getElementById("txt_pass_login").value;
+                                    window.open("inicio.html?id_chofer=" + data[0].id_chofer + "&matricula=" + data[0].matricula + "&estatus=" + data[0].estatus, "_blank", "location = yes");
+                                } else if (data[0].estatus === "Activo") {
+                                    localStorage.user = document.getElementById("txt_user_login").value;
+                                    localStorage.pass = document.getElementById("txt_pass_login").value;
+                                    window.open("inicio.html?id_chofer=" + data[0].id_chofer + "&matricula=" + data[0].matricula + "&estatus=" + data[0].estatus, "_blank", "location = yes");
+                                }
+                            } else {
+                                document.getElementById("div_error").style.display = "block";
+                                document.getElementById("label_error").innerHTML = "Datos de usuario incorrectos";
+                                myApp.hidePreloader();
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            document.getElementById("div_error").style.display = "block";
+                            document.getElementById("label_error").innerHTML = "Ocurrio un error al verificar los datos";
+                            myApp.hidePreloader();
+                        }
+                    });
+                }
+
+            }
+
+        </script>
+
+    </head>
+    <body>
+        <div class="page">
+            <div class="page-content login-screen-content" style="background: #f2f2f2; background-image: url('img/img_taxista.jpg'); background-position: center; background-repeat: no-repeat;">
+                <div class="statusbar-overlay"></div>
+
+                <!-- Panels overlay-->
+                <div class="panel-overlay"></div>
+                <div class="content-block-title" style="font-size: 20px">IPA Conductor</div>
+                <div  style="margin:0; position: absolute;top: 0;bottom: 19px;width: 100%; height: 95%;">
+                    <div class="div-centered">
+                        <div>
+                            <div class="row no-gutter" id="form-login">
+                                <div class="col-100">
+                                    <p style="font-size: 20px; font-weight: bold; color: #0489b1; margin: 55px 0 10px 0; text-align: center">Ingresar</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: center; display: none; text-align: center;" id="div_error">
+                                <label style="color: red; font-size: 20px; background-color: rgba(0, 0, 0, 0.65); margin-top: 25px; padding: 0 5px 0 5px; text-align: center;" id="label_error"></label>
+                            </div>
+
+
+                            <div class="row no-gutter" id="form-login">
+                                <div class="col-100" style="width: 100%;display: inline-grid;">
+                                    <div class="list-block frm_logueo">
+                                        <ul>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon f7-icons">person</i></div>
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input type="text" placeholder="Usuario" class="frm_input" id="txt_user_login">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon f7-icons">lock_fill</i></div>
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input type="password" placeholder="Contraseña" class="frm_input" id="txt_pass_login">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style="display: flex; justify-content: center;">
+                                <button id="btn_logueo" style="border-radius: 0;width: auto;line-height: inherit; padding: 5px 10px; height:auto;" class="button button-big button-fill color-blue" onclick='login()' >Entrar</button>  
+                            </div>
+
+                            <div style="display: flex; justify-content: center;">
+                                <p><a data-popup=".popup-crear-cuenta" class="open-popup button" onclick="consulta_centrales();">Crear cuenta</a></p> 
+                            </div>
+
+                        </div> 
+                    </div>
+                    <div style="position: absolute;width: 100%;bottom: 0;display: flex;justify-content: center;">
+                        <p style="margin: 0;font-size: 14px; color: #bcbcbe;">Powered by Google Maps</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="popup popup-crear-cuenta">
+            <div class="bar-button-close">
+                <div class="row no-gutter">
+                    <div class="col-80">
+
+                    </div>
+                    <div class="col-20">
+                        <a href="#" class="close-popup" id="a-button-close"><button class="button-close-modal"></button></a>  
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block-title" style="font-weight: bold;">Crear cuenta</div>
+            <div class="list-block" style="margin-bottom: 10px;">
+                <form id="frm_crear_cuenta" name="frm_crear_cuenta" enctype="multipart/form-data">
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Nombre</div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="Nombre" id="txt_nombre_cuenta" name="txt_nombre_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Apellido paterno</div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="Apellido paterno" id="txt_appat_cuenta" name="txt_appat_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Apellido materno</div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="Apellido materno" id="txt_apmat_cuenta" name="txt_apmat_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Género</div>
+                                    <div class="item-input">
+                                        <select id="txt_sexo_cuenta" name="txt_sexo_cuenta">
+                                            <option value="">Seleccione</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Fecha de Nacimiento</div>
+                                    <div class="item-input">
+                                        <input type="date" value="" id="txt_fecha_nac_cuenta" name="txt_fecha_nac_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label" style="font-weight: bold">Dirección</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Calle</div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="Calle" id="txt_calle_cuenta" name="txt_calle_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Número</div>
+                                    <div class="item-input">
+                                        <input type="number" placeholder="Número" id="txt_no_cuenta" name="txt_no_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Colonia</div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="Colonia" id="txt_colonia_cuenta" name="txt_colonia_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">C.P.</div>
+                                    <div class="item-input">
+                                        <input type="number" placeholder="C.P." id="txt_cp_cuenta" name="txt_cp_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Teléfono</div>
+                                    <div class="item-input">
+                                        <input type="tel" value="" placeholder="Teléfono" id="txt_tel_cuenta" name="txt_tel_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Celular</div>
+                                    <div class="item-input">
+                                        <input type="tel" value="" placeholder="Celular" id="txt_cel_cuenta" name="txt_cel_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Correo electronico</div>
+                                    <div class="item-input">
+                                        <input type="email" placeholder="Correo electronico" id="txt_correo_cuenta" name="txt_correo_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label" style="font-weight: bold; width: 100%;">Datos de acceso</div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Nombre de usuario</div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="Nombre de usuario" id="txt_usuario_cuenta" name="txt_usuario_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>                    
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Contraseña</div>
+                                    <div class="item-input">
+                                        <input type="password" placeholder="Contraseña" id="txt_pass_cuenta" name="txt_pass_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>                    
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Repite contraseña</div>
+                                    <div class="item-input">
+                                        <input type="password" placeholder="Repite contraseña" id="txt_pass2_cuenta" name="txt_pass2_cuenta">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>          
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Central</div>
+                                    <div class="item-input">
+                                        <select id="txt_central_cuenta" name="txt_central_cuenta">
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>                    
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Foto de usuario</div>
+                                    <div class="item-input">
+                                        <label for="img_cuenta" class="button button-fill" style="background-color: #64ad81 !important">Seleccionar Imagen</label>
+                                        <input type="file" id="img_cuenta" name="img_cuenta" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </form>
+            </div>
+            <button style="width: 100%; border-radius: 0px;" onclick='registrar_cuenta();' class="button button-big button-fill close-popup">Registrar cuenta</button>
+
+        </div>
+
+    </body>

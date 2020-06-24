@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">    
+
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/framework7-icons.css">
+
+    <script type="text/javascript" src="cordova.js"></script>
+    
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+      $( document ).ready(function() {
+          $( "#menu" ).load( "menu.html" );
+      });
+    </script>
+  </head>
+
+<body>
+    <div class="statusbar-overlay"></div>
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal" id="menu" style="background: #f2f2f2; border-right: 1px solid #c2c2c2">
+        
+    </div>
+
+    <!-- Views -->
+    <div class="views" >
+        <!-- Your main view, should have "view-main" class -->
+        
+        <div class="view view-main">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="left"> <a href="#" class="link icon-only open-panel"><i class="f7-icons color-black">bars</i></a></div>
+                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                    <div class="right"></div>
+              </div>
+            </div>
+          <div class="page-content infinite-scroll">
+            <div class="content-block" id="contenido_pagina" style="padding: 0; margin: 44px 0px 0px 0px;">
+                <div class="content-block-title">Redes sociales</div>
+
+                <div class="list-block media-list" style="margin: 0;background: #f2f2f2">
+                  <ul>
+                    <li style=";background: #fff;">
+                      <div style="display: flex;">
+                        <div class="item-media"><img src="icon/google.png" width="40" style="border-radius: 5px"></div>
+                        <div class="item-inner">
+                          <div class="item-title-row">
+                            <div class="item-title" style="font-size: 22px" >Google</div>
+                          </div>
+                            <div class="item-text" style="height: auto"><a>Eliminar</a></div>
+                        </div>
+                      </div>
+                      <div class="more-link">
+                        <a>Ver más...</a>
+                      </div>
+                    </li>
+                    <li style=";background: #fff">
+                      <div style="display: flex;">
+                        <div class="item-media"><img src="icon/facebook.png" width="40" style="border-radius: 5px"></div>
+                        <div class="item-inner">
+                          <div class="item-title-row">
+                            <div class="item-title" style="font-size: 22px" >Facebook</div>
+                          </div>
+                            <div class="item-text" style="height: auto"><a>Eliminar</a></div>
+                        </div>
+                      </div>
+                      <div class="more-link">
+                        <a>Ver más...</a>
+                      </div>
+                    </li>
+                     <li style=";background: #fff;">
+                         <div style="display: flex;">
+                           <div class="item-media"><img src="icon/twitter.png" width="40" style="border-radius: 5px"></div>
+                            <div class="item-inner">
+                              <div class="item-title-row">
+                                <div class="item-title" style="font-size: 22px">Twitter</div>
+                              </div>
+                              <div class="item-text" style="height: auto"><a>Agregar</a></div>
+                            </div>
+                         </div>
+                          <div class="more-link" id="more-link">
+                            <a>Ver más...</a>
+                          </div>
+                    </li>
+                    <li style=";background: #fff;">
+                         <div style="display: flex;">
+                           <div class="item-media"><img src="icon/instagram.png" width="40" style="border-radius: 5px"></div>
+                            <div class="item-inner">
+                              <div class="item-title-row">
+                                <div class="item-title" style="font-size: 22px">Instagram</div>
+                              </div>
+                              <div class="item-text" style="height: auto"><a>Agregar</a></div>
+                            </div>
+                         </div>
+                          <div class="more-link" id="more-link">
+                            <a>Ver más...</a>
+                          </div>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+ <div class="login-screen">
+    <div class="view">
+      <div class="page">
+        <div class="page-content login-screen-content">
+          <div class="bar-button-close">
+            <div class="row no-gutter">
+              <div class="col-80">
+                 
+              </div>
+              <div class="col-20">
+                <a href="#" class="close-login-screen" id="a-button-close"><button class="button-close-modal"></button></a>  
+              </div>
+            </div>
+          </div>
+          <div style="font-size: 16px" class="login-screen-title"> Agrega una nueva cuenta bancaria  </div>
+          <form>
+            <div class="list-block">
+              <ul>
+               
+                <li class="item-content" style="background:0">
+                  <div class="item-inner">
+                    <div class="item-title label">Número de<br>tarjeta</div>
+                    <div class="item-input">
+                      <input type="text" name="username" placeholder="XXXX-XXXX-XXXX-XXXX">
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content" style="background:0">
+                  <div class="item-inner">
+                    <div class="item-title label">Dígitos de<br>seguridad</div>
+                    <div class="item-input" style="display: flex; align-items: center;">
+                      <input type="text" name="username" placeholder="XXXX" maxlength="4" style="max-width: 75px">
+                      <a id="digits" href="#" class=""><button class="button-question-modal"></button></a>
+
+                  </div>
+                </li>
+                <li class="item-content" style="background:0">
+                  <div class="item-inner">
+                    <div class="item-title label">Fecha de<br>vencimiento</div>
+                    <div class="item-input" style="display: flex; align-items: center;">
+                      <select id="meses" style="width: auto">
+                        <option value="1">01</option>
+                        <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
+                        <option value="5">05</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                      </select>
+                      /
+                      <select id="anio" style="color: ">
+                        
+                      </select>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="list-block">
+              <ul>
+                <li><button href="#" class="button button-big button-fill color-green" style="border-radius: 0; width: 100%">Aceptar</button></li>
+              </ul>
+              <div class="list-block-label">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                
+              </div>
+            </div>
+          </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+  var fecha = new Date();
+  var anio = fecha.getFullYear();
+
+  $( document ).ready(function() {
+    for (var i = 1; i < 10; i++) {
+      $('#anio').append($('<option>', {
+        value: anio,
+        text: anio
+      }));
+      anio++;
+    }
+  });
+  
+  $("#anio").change(function() {
+    if($(this).val()==fecha.getFullYear()){
+       
+      /*for (var i = 1; i=fecha.getMonth(); i++) {
+        $("#meses option[value='"+i+"']").remove();
+      }
+     */
+    }
+  });
+  
+
+
+var myPhotoBrowserDark = myApp.photoBrowser({
+    photos : [
+        '/icon/digits.png'
+    ],
+    theme: 'dark'
+});
+
+$('#digits').on('click', function () {
+    myPhotoBrowserDark.open();
+});
+
+
+
+
+</script>

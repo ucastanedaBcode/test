@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">    
+
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/framework7-icons.css">
+
+    <script type="text/javascript" src="cordova.js"></script>
+    
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+      $( document ).ready(function() {
+          $( "#menu" ).load( "menu.html" );
+          //alert(ubicacionReal);
+          //alert(destinoReal);
+      });
+
+      function pedirTaxi(){
+       $( "#pedirTaxi" ).load( "solicitando.html" );
+      }
+      function notificacion(){
+        myApp.addNotification({
+            color:'black',
+            title: 'TaxiApp',
+            subtitle: 'Ha llegado tu taxi',
+            message: 'Te están esperando afuera de tu casa.',
+            media: '<img width="44" height="44" style="border-radius:100%" src="/icon/taxi.png">'
+        });
+      }
+  
+    </script>
+  </head>
+
+<body id="pedirTaxi">
+    <div class="statusbar-overlay"></div>
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal" id="menu" style="background: #f2f2f2; border-right: 1px solid #c2c2c2">
+        
+    </div>
+
+    <!-- Views -->
+    <div class="views" >
+        <!-- Your main view, should have "view-main" class -->
+        
+        <div class="view view-main">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="left"> <a href="#" class="link icon-only open-panel"><i class="f7-icons color-black">bars</i></a></div>
+                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                    <div class="right"></div>
+              </div>
+            </div>
+          <div class="page-content infinite-scroll">
+            <div class="content-block"  style="padding: 0; margin: 44px 0px 0px 0px; position:absolute;width:100%;top:0;bottom: 0">
+              <div class="content-block-title">Pide tu taxi</div>
+               <div class="list-block" style="margin: 0 !important; width: 100%">
+               <div class="" style=" padding: 20px 0px !important; text-align: center;">¿Son correctas las direcciones?</div>
+                <ul id="direcciones" style="padding: 0px 20px">
+                  <li style="background: #fff">
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label" style="font-weight: bold; width: 87px;">Ubicación:</div>
+                        <div class="item-input">
+                          <input type="text" id="ubicacion" name="ubicacion">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <li style="background: #fff">
+                    <div class="item-content">
+                      <div class="item-inner" >
+                        <div class="item-title label" style="font-weight: bold; width: 87px">Destino:</div>
+                        <div class="item-input">
+                          <input type="text" id="destino" name="destino">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                 
+                </ul>
+                <div style="width:100%; display: flex;justify-content: center;padding: 5px 0px;">
+                    <button style="border-radius: 0;font-size: 13px;padding: 5px;height: auto;line-height: 25px;" onclick='' id="destino" value="" class="button button-big button-fill color-lightblue">Aplicar cambios</button>  
+                </div>
+                
+
+                <div>
+                  <div class="" style=" padding: 20px 0px !important; text-align: center;">Detalles del viaje</div>
+                  <ul id="direcciones" style="padding: 0px 20px">
+                  <li style="background: #fff">
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label" style="font-weight: bold; width: 87px;">Viajes:</div>
+                        <div class="item-input">
+                          1
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li style="background: #fff">
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label" style="font-weight: bold; width: 87px;">Costo:</div>
+                        <div class="item-input">
+                          $50
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                
+                  <li style="background: #fff">
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label" style="font-weight: bold; width: 87px">Distancia:</div>
+                        <div class="item-input">
+                          3km
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                 
+                </ul>
+                </div>
+                <button style="position: absolute; width: 100%; border-radius: 0px; bottom: 0" onclick='pedirTaxi()' id="destino" value="" class="button button-big button-fill color-lightblue">Pedir taxi</button>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+</body>
+
+</html>
+  

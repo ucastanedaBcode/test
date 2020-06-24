@@ -1,0 +1,367 @@
+/*
+   statusbar-overlay sets the background color for the overlay. Black text is the default when the statusbar plugin is not added. When the
+   statusbar plugin is added, it also adds default setting to make the content white via:
+
+       <preference name="StatusBarStyle" value="lightcontent"/>
+
+   Setting the background color to black will allow the default light content (white text/icons) to show on it. The statusbar plugin is included
+   in the config.xml file and will be added by the CLI when you build locally.
+
+   See https://github.com/apache/cordova-plugin-statusbar
+*/
+
+.statusbar-overlay {
+    background: #000000;
+}
+#label-t{
+    background:#f2f2f2;
+}
+
+#star{ color:grey;}
+#star:hover{color:orange;}
+#star:hover ~ #star{color:orange;}
+input[type = "radio"]:checked ~ star{color:orange;}
+input[type = "radio"]{ display:none;}
+.clasificacion{
+    direction: rtl;/* right to left */
+    unicode-bidi: bidi-override;/* bidi de bidireccional */
+}
+
+.stars-rate{
+    width:26px; 
+    height:26px; 
+    margin: 0px -3px 0px -3px; 
+    color:#FFF;
+    background:url('../icon/bookmark.png') no-repeat 0px -3px;
+    background-size:26px 26px; 
+    text-align: center;
+}
+#stars {
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+}
+#stars li{
+    background:url('../icon/star-inactive.png') no-repeat 0px 0px transparent;
+    background-size: 16px 16px;
+    width:16px;
+    height:16px;
+    float:left;
+}
+#stars li.selected{ /* esta clase añade la imagen seleccionada */
+    background:url('../icon/star-active.png') no-repeat 0px 0px transparent;
+    background-size: 16px 16px;
+    width:16px;
+    height:16px;
+    float:left;
+}
+
+#stars-view{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+}
+#stars-view li{
+    background:url('../icon/star-inactive.png') no-repeat 0px 0px transparent;
+    background-size: 16px 16px;
+    width:16px;
+    height:16px;
+    float:left;
+}
+#stars-view li.selected{ /* esta clase añade la imagen seleccionada */
+    background:url('../icon/star-active.png') no-repeat 0px 0px transparent;
+    background-size: 16px 16px;
+    width:16px;
+    height:16px;
+    float:left;
+}
+.perfil-img{
+    /*padding: 10px;*/
+    /*border: 2px solid #a2a2a2;*/
+    width: 120px;
+}
+.apodo-perfil{
+    font-size: 40px;
+    color: #0489b1;
+}
+.title-info-perfil{
+    padding: 0px 5px;
+    font-size: 24px;
+    color: #64ad81;
+}
+.table-info-perfil {
+    width: 100%
+}
+.table-info-perfil td{
+    width: 50% !important;
+    font-size:16px !important;
+}
+#row-info-perfil{
+    padding: 5px 10px 0px 5px;
+    align-items: center;
+    color:#6d6d72
+}
+
+.bar-button-close{
+    padding: 0px 5px;
+    background: #f7f7f8;
+    border-bottom:1px solid #c2c2c2; 
+    height: 44px;
+
+}
+.bar-button-close-tittle{
+    height: 35px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+#a-button-close{
+    width: 25px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    float: right;
+}
+.button-close-modal{
+    width: 25px;
+    height: 25px;
+    float: right;
+    background: 0;
+    border:0;
+    background: url('../icon/close.png') no-repeat scroll 0;
+    padding: 0;
+    background-size: 25px 25px;
+    cursor: pointer;
+}
+.button-question-modal{
+    width: 20px;
+    height: 20px;
+    float: right;
+    background: 0;
+    border:0;
+    background: url('../icon/question.png') no-repeat scroll 0 0 transparent;
+    padding: 0;
+    background-size: 20px 20px;
+}
+.popover {
+    width: 200px;
+}
+#button-back{
+    cursor: pointer;
+}
+
+.table-vertical{
+    width: 100%;
+    padding: 10px;
+}
+.table-vertical th{
+    text-align: left;
+    width: 40%;
+    color: #848484;
+}
+#boton-taxi{
+    position: absolute;
+    top: 500px; /* Header Height */
+    bottom: 20px; /* Footer Height */
+    width: 100%;
+}
+.social-net{
+    position:absolute;
+    width:100%;
+    bottom: 0px;
+}
+.social-net-title{
+    display: flex;
+    width:100%;
+}
+.social-net-tittle p{
+    text-align: center;
+}
+.social-net-content{
+    display: flex;
+    width:100%;
+    padding: 10px 0px 0px 0px;
+    justify-content: center;
+}
+
+.social-net-content a{
+    text-align: center;
+    padding: 0px 5px;
+}
+.more-link{
+    width: 100%; 
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+}
+
+#form-login input{
+    padding: 5px 10px;
+    font-size: 14px
+}
+.logo-social-login{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.text-social-login{
+    font-size: 16px;display: flex;align-items: center;padding-left: 5px;color: #fff
+}
+.input-modal{
+    border-bottom: 2px solid #a2a2a2 !important;
+    padding: 5px 10px !important;
+    height: auto !important;
+
+}
+#div-map{
+
+    width: 100%;
+    height: 400px; 
+}
+#form-registro li{
+    background: #fff !important;
+}
+.tabla-historial th{
+    padding: 10px 0px !important;
+}
+.tabla-historial td{
+    border-bottom: 1px solid #cccccc !important;
+    border-right: 1px solid #cccccc !important;
+    padding: 10px 5px !important;
+}
+
+.tabla-historial tr td:last-child{
+    border:0 !important;
+    border-bottom: 1px solid #cccccc !important;
+    padding: 10px 5px !important;
+}
+
+.tabla-historial tr:last-child td{
+    border:0 !important;
+    border-right: 1px solid #cccccc !important;
+    padding: 10px 5px !important;
+}
+.tabla-historial tr:last-child td:last-child{
+    border:0 !important;
+
+    padding: 10px 5px !important;
+}
+.content-block-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 44px;
+    padding: 0px !important;
+    border:0 !important;
+}
+
+#tabla_lugares li:last-child {
+    border:0 !important; 
+}
+#no_lugares{
+    padding: 10px 0;
+    font-weight: bold;
+}
+.list-lugares{
+    background: 0 !important;
+}
+
+.list-lugares li{
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.list-login{
+    width: auto !important;
+}
+.list-login table{
+    width: 100% !important;
+    padding:0px 30px;
+}
+.list-login table tr td{
+    width: 100% !important;
+    display: flex;
+}
+.list-login input{
+    width: 100% !important;
+}
+.list-login a{
+    width: 100% !important;
+}
+.list-login button{
+    width: 100% !important;
+}
+.frm_logueo{
+    width: 80% !important;
+    max-width: 80% !important;
+}
+.frm_logueo>ul>li{
+    background:rgba(0, 0, 0, 0.65);
+    border-bottom: 1px solid #20708a;
+    margin-bottom: 10px !important;
+}
+::placeholder{
+    color: #bcbcbe !important;
+}
+.frm_logueo>ul>li>.item-content>.item-inner>.item-input > .frm_input{
+    color: white !important;
+}
+.frm_logueo>ul>li>.item-content>.item-media>i{
+    color: #bcbcbe !important;
+    margin-bottom: 10px !important;
+}
+#btn_logueo{
+    width: 80% !important;
+}
+.frm_datos_chofer>form>ul>li{
+    background-color: white !important;
+}
+.label_gps_disabled{
+    font-size: 20px;
+    color: #0489b1;
+    margin: 15px;
+}
+
+.datos_solicitud_pendiente > li > .item-content{
+    min-height: 30px !important;
+}
+.datos_solicitud_pendiente > li > .item-content > .item-inner{
+    min-height: 30px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.datos_solicitud_pendiente > li > .item-content > .item-inner > .item-title{
+    font-size: 14px;
+}
+.datos_solicitud_pendiente > li > .item-content > .item-inner > .item-input > input{
+    font-size: 14px;
+}
+.list_menu>li>a{
+    color: black !important;
+}
+.list_sub_menu>.content-block>ul>li>a{
+    color: black !important;
+}
+.lista-cuenta-bancaria>li{
+    background-color: transparent;
+    border-bottom: 1px solid #d2d2d2;
+}
+.label_estrella{
+    color: gray;
+}
+.label_estrella:hover ~ label{
+    color:orange;
+}
+.label_estrella:hover{
+    color:orange;
+}
+.radio_estrella{
+    display: none;
+}
+.radio_estrella:checked ~ label{
+    color:orange;
+}

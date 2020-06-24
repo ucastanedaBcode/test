@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Geolocation</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">    
+
+        <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+        <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/framework7-icons.css">
+
+        <script type="text/javascript" src="cordova.js"></script>
+
+        <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+        <script type="text/javascript" src="js/my-app.js"></script>
+        <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                $("#hdn_id_chofer").val(get_var_url("id_chofer"));
+
+            });
+
+            function  get_var_url(key) {
+                key = key.replace(/[\[]/, '\\[');
+                key = key.replace(/[\]]/, '\\]');
+                var pattern = "[\\?&]" + key + "=([^&#]*)";
+                var regex = new RegExp(pattern);
+                var url = unescape(window.location.href);
+                var results = regex.exec(url);
+                if (results === null) {
+                    return null;
+                } else {
+                    return results[1];
+                }
+            }
+
+            function registrar_vehiculo() {
+                if (revisa_frm_crea_cuenta_completo()) {
+                    var formData = new FormData(document.getElementById("frm_vehiculo"));
+
+                    $.ajax({
+                        url: "http://bcodemexico.com/taxiApp/Taxistas/registrar_vehiculo.php",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (data, textStatus, jqXHR) {
+                            console.log(data);
+                            window.open("index.html", "_blank", "location = yes");
+//                            if (data.trim() === "1") {
+//                                myApp.alert("Tu cuenta se ha registrado y esta en espera de autorización", "Registrada");
+//                                document.getElementById("frm_crear_cuenta").reset();
+//                            } else {
+//                                myApp.alert("Ocurrio un problema al registrar tu cuenta, por favor intenta más tarde", "Error");
+//                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+//                            myApp.hidePreloader();
+                            console.log(textStatus);
+//                            myApp.alert("Ocurrio un problema al registrar tu cuenta, por favor intenta más tarde", "Error");
+                        }
+                    });
+
+                } else {
+                    myApp.alert("Completa el formulario", "Datos incompletos");
+                }
+            }
+
+
+            function revisa_frm_crea_cuenta_completo() {
+                var completo = true;
+
+
+                if (document.getElementById("txt_marca").value === "") {
+                    completo = false;
+                }
+                if (document.getElementById("txt_modelo").value === "") {
+                    completo = false;
+                }
+                if (document.getElementById("txt_matricula").value === "") {
+                    completo = false;
+                }
+
+
+                return completo;
+
+            }
+
+        </script>
+
+
+    </head>
+    <body>
+        <form id="frm_vehiculo">
+            <input type="hidden" id="hdn_id_chofer" name="hdn_id_chofer" value="">
+
+            <div class="views" style="background: #fff">
+                <div style="width: 100%; height: 35px; padding-top: 10px; background-color: #0489B1; font-size: 20px; color: #fff; text-align: center;">
+                    Registrar datos del vehículo
+                </div>
+                <div style="width: 100%;">
+                    <div class="list-block" style="margin-bottom: 10px;">
+
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Marca</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Marca" id="txt_marca" name="txt_marca">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Modelo</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Modelo" id="txt_modelo" name="txt_modelo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Matricula</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Matricula" id="txt_matricula" name="txt_matricula">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <button type="button" style="width: 100%; border-radius: 0px;" onclick='registrar_vehiculo();' class="button button-big button-fill">Registrar vehículo</button>
+
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+
+</html>

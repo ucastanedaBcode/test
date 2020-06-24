@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">    
+
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/framework7-icons.css">
+
+    <script type="text/javascript" src="cordova.js"></script>
+    
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+      $( document ).ready(function() {
+          $( "#menu" ).load( "menu.html" );
+      });
+    </script>
+  </head>
+
+<body>
+    <div class="statusbar-overlay"></div>
+
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal" id="menu" style="background: #f2f2f2; border-right: 1px solid #c2c2c2">
+       
+    </div>
+
+    <!-- Views -->
+    <div class="views" >
+        <!-- Your main view, should have "view-main" class -->
+        
+        <div class="view view-main">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="left"> <a href="#" class="link icon-only open-panel"><i class="f7-icons color-black">bars</i></a></div>
+                    <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                    <div class="right" id="button-back" onclick='window.location="inicio.html"' style="font-size: 14px">Atrás<img src="icon/atras.png" width="20"></div>
+              </div>
+            </div>
+          <div class="page-content infinite-scroll">
+            <div class="content-block" id="contenido_pagina" style="padding: 0; margin: 44px 0px 0px 0px;">
+              <div style="width: 100%; height:360px" id="map">
+                
+              </div>
+              
+              <div class="list-block" style="margin: 0 !important;">
+               <div class="content-block-title" style="padding: 10px 0px 10px 0px !important">Direcciones</div>
+                <ul id="direcciones">
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner" style="background: #f2f2f2; color: #000">
+                        <div class="item-title label" style="font-weight: bold; width: 87px;">Ubicación:</div>
+                        <div class="item-input">
+                          <input type="text" id="ubicacion" name="ubicacion">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner" style="background: #f2f2f2; color: #000">
+                        <div class="item-title label" style="font-weight: bold; width: 87px">Destino:</div>
+                        <div class="item-input">
+                          <input type="text" id="destino" name="destino">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                 
+                </ul>
+                <div class="row" >
+                      <button style="width: 100%; border-radius: 0px" onclick="buscarTaxi();" id="destino" value="" class="button button-big button-fill color-blue">Buscar taxi</button>
+                      
+                </div>
+              </div>    
+
+          <script type="text/javascript" src="js/varias.js"></script>
+          <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjGHdi53xmyV8C4zP3vPBp-NVYZiAKJFk&callback=initMap"></script>
+                    
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+</body>
+
+</html>

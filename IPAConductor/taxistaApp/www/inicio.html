@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Geolocation</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">    
+
+        <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+        <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/framework7-icons.css">
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+        <!--<script type="text/javascript" src="js/my-app.js"></script>-->
+        <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="js/mapFunciones.js"></script>
+        <script type="text/javascript" src="js/my-app2.js"></script>
+
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                //$("#opcion_inicio").load("inicio_content.html");
+                $("#opcion_historial").load("historial.html");
+                $("#opcion_cartera").load("cartera.html");
+                $("#opcion_perfil").load("perfil.html");
+                $("#opcion_cuenta_bancaria").load("cuenta_bancaria.html");
+                var matricula = get_var_url("matricula");
+
+                if (matricula === "" || matricula === "null" || matricula === null) {
+                    window.open("registro_vehicul.html?id_chofer=" + get_var_url("id_chofer"), "_blank", "location = yes");
+                } else {
+                    $("#hidden_id_chofer").val(get_var_url("id_chofer"));
+                    $("#hidden_matricula").val(get_var_url("matricula"));
+                    $("#hidden_status").val(get_var_url("estatus"));
+                    $("#menu").load("menu.html");
+                    initial_view();
+                }
+
+            });
+
+            function  get_var_url(key) {
+                key = key.replace(/[\[]/, '\\[');
+                key = key.replace(/[\]]/, '\\]');
+                var pattern = "[\\?&]" + key + "=([^&#]*)";
+                var regex = new RegExp(pattern);
+                var url = unescape(window.location.href);
+                var results = regex.exec(url);
+                if (results === null) {
+                    return null;
+                } else {
+                    return results[1];
+                }
+            }
+
+
+        </script>
+    </head>
+    <body>
+        <input type="hidden" id="hidden_id_chofer" value="">
+        <input type="hidden" id="hidden_matricula" value="">
+        <input type="hidden" id="hidden_status" value="">
+
+        <input type="hidden" id="txt_estatus_taxi" value="">
+        <input type="hidden" id="ruta_actual" value="">
+
+        <input type="hidden" id="txt_direccion_ubicacion_cliente" value="">
+        <input type="hidden" id="txt_direccion_destino_cliente" value="">
+        <input type="hidden" id="txt_texto_direccion_ubicacion_cliente" value="">
+        <input type="hidden" id="txt_metros_viaje" value="">
+        <input type="hidden" id="txt_costo_viaje" value="">
+
+        <input type="hidden" id="control_peticiones" value="0">
+        <input type="hidden" id="lat_ubic_cliente_sol" value="">
+        <input type="hidden" id="long_ubic_cliente_sol" value="">
+        <input type="hidden" id="lat_ubic_cliente_real" value="">
+        <input type="hidden" id="long_ubic_cliente_real" value="">
+        <input type="hidden" id="id_solicitud_servicio" name="">
+
+        <!--<input type="text" id="info_prueba" value="">-->
+
+        <div class="statusbar-overlay"></div>
+        <!-- Panels overlay-->
+        <div class="panel-overlay"></div>
+        <!-- Left panel with reveal effect-->
+        <div class="panel panel-left panel-reveal" id="menu" style="background: #f2f2f2; border-right: 1px solid #c2c2c2">
+
+        </div>
+
+        <!-- Views -->
+        <div class="views"  style="background: #fff">
+            <!-- Your main view, should have "view-main" class -->
+
+            <div class="view view-main">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="left"> 
+                            <a href="#" id="btn-menup" class="link icon-only open-panel"><i class="f7-icons color-black">bars</i></a>
+                            <h6 style="font-size: 1rem;"><span id="status_mostrar_taxi"></span></h6>
+                        </div>
+                        <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                        <div class="right" id="btn_gps" >
+                            <div class="item-inner" style="display: flex;justify-content: flex-end;width: 100%">
+                                <div class="item-title label" style="display: flex;align-items: center;font-size: 14px">Ubicacion GPS&nbsp</div>
+                                <div class="item-input">
+                                    <label class="label-switch">
+                                        <input id="GPScheck" type="checkbox" onchange="GPScheck()">
+                                        <div id="GPScheck" class="checkbox"></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content infinite-scroll">
+
+                    <div class="content-block" id="opcion_inicio" style="padding: 0; margin: 44px 0px 0px 0px;">
+
+                    </div>
+                    <div class="content-block" id="opcion_historial" style="padding: 0; margin: 44px 0px 0px 0px; display: none;">
+
+                    </div>
+                    <div class="content-block" id="opcion_cartera" style="padding: 0; margin: 44px 0px 0px 0px;display: none;">
+
+                    </div>
+                    <div class="content-block" id="opcion_perfil" style="padding: 0; margin: 44px 0px 0px 0px; display: none;">
+
+                    </div>
+                    <div class="content-block" id="opcion_cuenta_bancaria" style="padding: 0; margin: 44px 0px 0px 0px; display: none;">
+
+                    </div>
+
+                    <div id="popup-verSolicitud" style="display: none;">
+                        <div class="content-block-title" style="height: 34px">Nuevo Servicio</div>
+                        <div style="position: absolute;top: 44px;bottom: 146px;width: 100%;" id="mapSolicitud">
+                        </div>
+                        <div class="content-block" style="margin: 0;padding: 0">
+                            <div class="list-block" style="margin: 0" id="div-map">
+
+                            </div>
+                            <div class="list-block" style="margin: 0 !important; position: absolute;bottom: 0; width: 100%">
+
+                                <ul class="datos_solicitud_pendiente">
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner" style="background: #f2f2f2; color: #000">
+                                                <div class="item-title label" style="font-weight: bold; width: 100%;text-align: center;">Nuevo Servicio</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                        <div class="item-content">
+                                            <div class="item-inner" style="background: #f2f2f2; color: #000">
+                                                <div class="item-title label" style="font-weight: bold; width: 87px;">Ubicación:</div>
+                                                <div class="item-input">
+                                                    <!--
+                                                    <input type="text" id="ubicacion_cliente" name="ubicacion_cliente" disabled="disabled">
+                                                    -->
+                                                    <textarea id="ubicacion_cliente" name="ubicacion_cliente" disabled="disabled" rows="1"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner" style="background: #f2f2f2; color: #000">
+                                                <div class="item-title label" style="font-weight: bold; width: 87px">Destino:</div>
+                                                <div class="item-input">
+                                                    <input type="text" id="destino_cliente" name="destino_cliente" disabled="disabled">
+                                                    <!--<textarea id="destino_cliente" name="destino_cliente" disabled="disabled" rows="1"></textarea>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner" style="background: #f2f2f2; color: #000">
+                                                <div class="item-title label" style="font-weight: bold; width: 87px">Costo:</div>
+                                                <div class="item-input">
+                                                    <input type="text" id="costo_cliente_viaje" name="costo_cliente_viaje" disabled="disabled">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div style="display: flex;">
+                                    <button style="width: 100%; border-radius: 0px; height: 80px;" class="button button-big button-fill color-red" onclick="rechazar_solicitud_view()">Rechazar</button>
+                                    <button style="width: 100%; border-radius: 0px; height: 80px;" class="button button-big button-fill color-lightblue" onclick="aceptar_solicitud_entrante()">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div id="respuesta"></div>
+                </div>
+            </div>
+        </div>
+
+<!--
+        <div class="popup popup-verSolicitud">
+            <div class="content-block-title" style="height: 34px">Ruta de viaje</div>
+            <div style="position: absolute;top: 44px;bottom: 146px;width: 100%;" id="mapSolicitud">
+            </div>
+            <div class="content-block" style="margin: 0;padding: 0">
+                <div class="list-block" style="margin: 0" id="div-map">
+
+                </div>
+                <div class="list-block" style="margin: 0 !important; position: absolute;bottom: 0; width: 100%">
+
+                    <ul class="datos_solicitud_pendiente">
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner" style="background: #f2f2f2; color: #000">
+                                    <div class="item-title label" style="font-weight: bold; width: 87px;">Ubicación:</div>
+                                    <div class="item-input">
+                                        <input type="text" id="ubicacion_cliente" name="ubicacion_cliente" disabled="disabled">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner" style="background: #f2f2f2; color: #000">
+                                    <div class="item-title label" style="font-weight: bold; width: 87px">Destino:</div>
+                                    <div class="item-input">
+                                        <input type="text" id="destino_cliente" name="destino_cliente" disabled="disabled">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner" style="background: #f2f2f2; color: #000">
+                                    <div class="item-title label" style="font-weight: bold; width: 87px">Costo:</div>
+                                    <div class="item-input">
+                                        <input type="text" id="costo_cliente_viaje" name="costo_cliente_viaje" disabled="disabled">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div style="display: flex;">
+                        <button style="width: 100%; border-radius: 0px; height: 80px;" class="button button-big button-fill color-red" onclick="rechazar_solicitud_view()">Rechazar</button>
+                        <button style="width: 100%; border-radius: 0px; height: 80px;" class="button button-big button-fill color-lightblue" onclick="aceptar_solicitud_entrante()">Aceptar</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+-->
+        <!--datos cuenta-->    
+        <div class="popup popup-cuenta-bancaria" >
+            <div class="bar-button-close">
+                <div class="row no-gutter">
+                    <div class="col-80">
+
+                    </div>
+                    <div class="col-20">
+                        <a href="#" class="close-popup" id="a-button-close"><button class="button-close-modal"></button></a>  
+                    </div>
+                </div>
+            </div>
+            <div class="content-block-title">Cuenta Bancaria</div>
+            <div class="col-100" >
+                <div class="list-block" style="margin: 10px 0;">
+
+                    <form id="frm_cuenta_bancaria">
+
+                        <input type="hidden" id="txt_id_cuenta_b" name="txt_id_cuenta_b" value=""/>
+                        <ul class="lista-cuenta-bancaria">                        
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><img src="icon/icono-banco.png" style="height: 25px;" alt=""/></div>
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Sucursal bancaria" id="txt_sucursal_cuenta_b" name="txt_sucursal_cuenta_b">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon f7-icons">card</i></div>
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="number" placeholder="Clave interbancaria" id="txt_clave_cuenta_b" name="txt_clave_cuenta_b"> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon f7-icons">person</i></div>
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Titular de la cuenta" id="txt_titular_cuenta_b" name="txt_titular_cuenta_b">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </form>
+                </div>
+                <button style="width: 100%; border-radius: 0px;" onclick='cuenta_bancaria();' class="button button-big button-fill close-popup">Guardar cambios</button>
+
+            </div>
+        </div>
+        <!--fin datos cuenta-->      
+
+        <div class="popup popup-about" >
+            <div class="bar-button-close">
+                <div class="row no-gutter">
+                    <div class="col-80">
+
+                    </div>
+                    <div class="col-20">
+                        <a href="#" class="close-popup" id="a-button-close"><button class="button-close-modal"></button></a>  
+                    </div>
+                </div>
+            </div>
+            <div class="col-100 " style="text-align: left; border-bottom: 1px solid #d2d2d2; margin: 10px 10px 0px 10px">
+                <label class="title-info-perfil">Información básica<a href="#" data-popup=".popup-about" class="open-popup" style="float: right;"></a></label>
+            </div>
+            <div class="col-100" id="inf-user-modal">
+                <div class="list-block frm_datos_chofer">
+                    <form id="frm_actualiza_datos_chofer" name="frm_actualiza_datos_chofer" enctype="multipart/form-data">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Apodo</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Apodo" id="frm_perfil_apodo" name="frm_perfil_apodo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Nombre</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Nombre" id="frm_perfil_nombre" name="frm_perfil_nombre">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Apellido Paterno</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Apellido Paterno" id="frm_perfil_appat" name="frm_perfil_appat">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Apellido Materno</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Apellido Materno" id="frm_perfil_apmat" name="frm_perfil_apmat">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Fecha de Nacimiento</div>
+                                        <div class="item-input">
+                                            <input type="date" placeholder="Fecha de Nacimiento" id="frm_perfil_fechanac" name="frm_perfil_fechanac">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Género</div>
+                                        <div class="item-input">
+                                            <select id="frm_perfil_sexo" name="frm_perfil_sexo">
+                                                <option value="Masculino">Masculino</option>
+                                                <option value="Femenino">Femenino</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Teléfono</div>
+                                        <div class="item-input">
+                                            <input type="tel" placeholder="Teléfono" id="frm_perfil_tel" name="frm_perfil_tel">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Celular</div>
+                                        <div class="item-input">
+                                            <input type="tel" placeholder="Celular" id="frm_perfil_cel" name="frm_perfil_cel">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label" style="font-weight: bold">Dirección</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Calle</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Calle" id="frm_perfil_calle" name="frm_perfil_calle">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Número</div>
+                                        <div class="item-input">
+                                            <input type="number" placeholder="Número" id="frm_perfil_numero" name="frm_perfil_numero">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Colonia</div>
+                                        <div class="item-input">
+                                            <input type="text" placeholder="Colonia" id="frm_perfil_colonia" name="frm_perfil_colonia">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">C.P.</div>
+                                        <div class="item-input">
+                                            <input type="number" placeholder="C.P." id="frm_perfil_cp" name="frm_perfil_cp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label">Foto de usuario</div>
+                                        <div class="item-input">
+                                            <label for="frm_perfil_foto" class="button button-fill" style="background-color: #64ad81 !important">Seleccionar Imagen</label>
+                                            <input type="file" id="frm_perfil_foto" name="frm_perfil_foto" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </form>
+                </div>
+
+                <button style="width: 100%; border-radius: 0px;" onclick='actualiza_datos_chofer()' class="button button-big button-fill close-popup">Guardar cambios</button>
+
+            </div>
+
+        </div>
+
+
+        <div class="popup popup-calificacion-cliente">
+            <div class="card-header" style="background: #0489B1; padding: 10px 10px">
+                <div class="data-table-title" style="color: #fff; width: 100%; text-align: center;">Califica al cliente</div>
+            </div>
+
+            <div class="card-content">
+                <form style="padding: 10em 0;" id="frm_calificacion_cliente">
+                    <p style="text-align: center; font-size: 4em; margin: 0;">Calificación</p>
+                    <p class="clasificacion" style="font-size: 5em; text-align: center;">
+                        <input id="radio1" class="radio_estrella" type="radio" name="calificacion" value="5"><label class="label_estrella" for="radio1" style="font-size: 2.5rem;">★</label>
+                        <input id="radio2" class="radio_estrella" type="radio" name="calificacion" value="4"><label class="label_estrella" for="radio2" style="font-size: 2.5rem;">★</label>
+                        <input id="radio3" class="radio_estrella" type="radio" name="calificacion" value="3"><label class="label_estrella" for="radio3" style="font-size: 2.5rem;">★</label>
+                        <input id="radio4" class="radio_estrella" type="radio" name="calificacion" value="2"><label class="label_estrella" for="radio4" style="font-size: 2.5rem;">★</label>
+                        <input id="radio5" class="radio_estrella" type="radio" name="calificacion" value="1"><label class="label_estrella" for="radio5" style="font-size: 2.5rem;">★</label>
+                    </p>
+                    <p style="padding: 0 5em;">
+                        <a class="button button-big button-fill color-lightblue" onclick="califica_cliente();" style="border-radius: 0;">Calificar</a>                    
+                    </p>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="popup popup-detalle-traslado">
+            <div class="bar-button-close">
+                <div class="row no-gutter">
+                    <div class="col-80">
+
+                    </div>
+                    <div class="col-20">
+                        <a href="#" class="close-popup" id="a-button-close"><button class="button-close-modal"></button></a>  
+                    </div>
+                </div>
+            </div>      
+            <!--<div class="card data-table data-table-collapsible data-table-init">-->
+            <div class="card-header" style="background: #0489B1; padding: 10px 10px">
+                <div class="data-table-title" style="color: #fff">Detalles del viaje</div>
+            </div>
+            <div class="card-content">
+                <table class="table-vertical">
+                    <thead>
+                        <tr>
+                            <th class="label-cell">Fecha</th>
+                            <td class="label-cell" id="fecha_det_t"></td>
+                        </tr>
+                        <tr>
+                            <th class="numeric-cell">Hora de salida</th>
+                            <td class="numeric-cell" id="salida_det_t"></td>
+                        </tr>
+                        <tr>
+                            <th class="numeric-cell">Hora de llegada</th>
+                            <td class="numeric-cell" id="llegada_det_t"></td>
+                        </tr>
+                        <tr>
+                            <th class="numeric-cell">Ubicación</th>
+                            <td class="numeric-cell" id="ubicacion_det_t"></td>
+                        </tr>
+                        <tr>
+                            <th class="numeric-cell">Destino</th>
+                            <td class="numeric-cell" id="destino_det_t"></td>
+                        </tr>
+                        <tr>
+                            <th class="numeric-cell">Chofer</th>
+                            <td class="numeric-cell" id="chofer_det_t"></td>
+                        </tr>
+                        <tr>
+                            <th class="numeric-cell">Matricula de unidad</th>
+                            <td class="numeric-cell" id="matricula_det_t"></td>
+                        </tr>
+                        <tr>
+                            <th class="numeric-cell">Cliente</th>
+                            <td class="numeric-cell" id="cliente_det_t"></td>
+                        </tr>
+                        <tr>
+                            <th class="numeric-cell">Costo</th>
+                            <td class="numeric-cell" id="costo_det_t"></td>
+                        </tr>
+
+                    </thead>
+                </table>
+            </div>
+            <!--</div>-->
+        </div>
+
+        <!--||||||||||||||||||||NUEVA CUENTA BANCARIA||||||||||||||||||-->    
+        <div class="login-screen">
+            <div class="view">
+                <div class="page">
+                    <div class="page-content login-screen-content">
+                        <div class="bar-button-close">
+                            <div class="row no-gutter">
+                                <div class="col-80">
+
+                                </div>
+                                <div class="col-20">
+                                    <a href="#" class="close-login-screen" id="a-button-close"><button class="button-close-modal"></button></a>  
+                                </div>
+                            </div>
+                        </div>
+                        <div style="font-size: 16px;font-weight: bold;color: #6d6d72;" class="login-screen-title"> Agrega una nueva cuenta bancaria  </div>
+                        <form>      
+                            <div class="list-block">
+                                <ul>
+
+                                    <li class="item-content" style="background:0">
+                                        <div class="item-inner">
+                                            <div class="item-title label" style="color: #6d6d72;">Número de<br>tarjeta</div>
+                                            <div class="item-input">
+                                                <input type="text" name="username" placeholder="XXXX-XXXX-XXXX-XXXX">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="item-content" style="background:0">
+                                        <div class="item-inner">
+                                            <div class="item-title label" style="color: #6d6d72;">Dígitos de<br>seguridad</div>
+                                            <div class="item-input" style="display: flex; align-items: center;">
+                                                <input type="text" name="username" placeholder="XXXX" maxlength="4" style="max-width: 75px">
+                                                <a id="digits" href="#" class=""><button class="button-question-modal"></button></a>
+                                            </div>
+                                    </li>
+                                    <li class="item-content" style="background:0">
+                                        <div class="item-inner">
+                                            <div class="item-title label" style="color: #6d6d72;">Fecha de<br>vencimiento</div>
+                                            <div class="item-input" style="display: flex; align-items: center;">
+                                                <select id="meses" style="width: auto;color: #6d6d72;">
+                                                    <option value="1">01</option>
+                                                    <option value="2">02</option>
+                                                    <option value="3">03</option>
+                                                    <option value="4">04</option>
+                                                    <option value="5">05</option>
+                                                    <option value="6">06</option>
+                                                    <option value="7">07</option>
+                                                    <option value="8">08</option>
+                                                    <option value="9">09</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
+
+                                                <select id="anio" style="color: #6d6d72;">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div style="width: 100%;display: flex;justify-content: center;padding: 20px 0px 0px 0px;">
+                                    <img style="width: 200px;height: 50px;" src="icon/vm.png">
+                                </div>
+                            </div>
+
+                        </form>
+                        <button class="button button-big button-fill color-lightblue" style="position: absolute;bottom: 0; border-radius: 0; width: 100%">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
