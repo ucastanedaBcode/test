@@ -596,10 +596,10 @@ function servicio_stts() {
                 $("#btn-menup").show();
                 buscar_peticiones();
             } else if (data.trim() === "terminada") {
-				// myApp.alert('¡El cliente ha teminado servicio!', 'Servicio cancelado');
+				 myApp.alert('¡El cliente ha teminado servicio!', 'Servicio cancelado');
 				 actualiza_estatus_taxi('libre'); 
 				 clearInterval(servicio_sttsid);
-               
+               /*
 				 myApp.modal({
 				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
 				        text: "<div class='div-modal-notificacion'>"+"El cliente ha teminado servicio</div>",
@@ -611,7 +611,7 @@ function servicio_stts() {
 	                                    type: 'POST',
 	                                    data: "estado=terminada&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=" + document.getElementById("txt_direccion_ubicacion_cliente").value + "&destino=" + destino_temporal + "&costo=" + document.getElementById("txt_costo_viaje").value,
 	                                    success: function (data, textStatus, jqXHR) {	
-	                                        myApp.popup('.popup-calificacion-cliente');
+	                                      
 	                                        clearInterval(servicio_sttsid);
 			                                buscar_peticiones();
 			                                borrar_marcas();
@@ -623,14 +623,16 @@ function servicio_stts() {
                                 
 				                }
 				            }]
-				    });
+				    });*/
 					 $("#btn_recoger_cliente").hide();
                 $("#opcion_inicio").show();
                 $("#popup-verSolicitud").hide();
                 $("#btn_libre").hide();
                 $("#btn_ocupado").show();
                 $("#btn-menup").show();
-				 
+				   myApp.popup('.popup-calificacion-cliente');
+				   buscar_peticiones();
+			                                borrar_marcas();
 				//terminar_servicio();
             	/*
                 clearInterval(intervalo_stts_servicio);
