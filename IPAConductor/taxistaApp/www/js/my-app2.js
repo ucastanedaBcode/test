@@ -516,7 +516,7 @@ function trazar_ruta() {
             window.alert('No se pudo establecer la ruta' + status);
         }
     });
-	}, 5000);
+	}, 500);
 }
 function rechazar_solicitud_view() {
     myApp.modal({
@@ -1284,7 +1284,10 @@ function revision_estado(){
                     $("#id_solicitud_servicio").val(data["id_peticion"]);
                     $("#btn_terminar_servicio").attr('disabled',false);
                     $("#btn_terminar_servicio").show();
-
+					//+++++
+					$("#btn_cancelar_servicio").attr('disabled',false);
+					$("#btn_cancelar_servicio").show();
+                  
                     document.getElementById("btn_libre").style.display = "none";
                     document.getElementById("btn_ocupado").style.display ="none";
 
