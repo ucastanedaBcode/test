@@ -1271,6 +1271,10 @@ function revision_estado(){
                     $("#txt_destino").val(data["mensaje"]);
                     $("#btn_recoger_cliente").attr('disabled',false);
                     document.getElementById("btn_recoger_cliente").style.display = "block";
+					//+++++
+					$("#btn_cancelar_servicio").attr('disabled',false);
+                    document.getElementById("btn_cancelar_servicio").style.display = "block";
+					
                     document.getElementById("btn_libre").style.display = "none";
                     document.getElementById("btn_ocupado").style.display ="none";
                     reestaurar_solicitud_aceptada("","","","");
