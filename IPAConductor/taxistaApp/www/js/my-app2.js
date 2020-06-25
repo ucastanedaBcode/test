@@ -599,12 +599,7 @@ function servicio_stts() {
 				// myApp.alert('¡El cliente ha teminado servicio!', 'Servicio cancelado');
 				 actualiza_estatus_taxi('libre'); 
 				 clearInterval(servicio_sttsid);
-                $("#btn_recoger_cliente").hide();
-                $("#opcion_inicio").show();
-                $("#popup-verSolicitud").hide();
-                $("#btn_libre").hide();
-                $("#btn_ocupado").show();
-                $("#btn-menup").show();
+               
 				 myApp.modal({
 				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
 				        text: "<div class='div-modal-notificacion'>"+"El cliente ha teminado servicio</div>",
@@ -629,6 +624,12 @@ function servicio_stts() {
 				                }
 				            }]
 				    });
+					 $("#btn_recoger_cliente").hide();
+                $("#opcion_inicio").show();
+                $("#popup-verSolicitud").hide();
+                $("#btn_libre").hide();
+                $("#btn_ocupado").show();
+                $("#btn-menup").show();
 				 
 				//terminar_servicio();
             	/*
