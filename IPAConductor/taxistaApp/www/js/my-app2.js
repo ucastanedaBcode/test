@@ -596,8 +596,40 @@ function servicio_stts() {
                 $("#btn-menup").show();
                 buscar_peticiones();
             } else if (data.trim() === "terminada") {
-				 myApp.alert('¡El cliente ha teminado servicio!', 'Servicio cancelado');
-				terminar_servicio();
+				// myApp.alert('¡El cliente ha teminado servicio!', 'Servicio cancelado');
+				 actualiza_estatus_taxi('libre'); 
+                $("#btn_recoger_cliente").hide();
+                $("#opcion_inicio").show();
+                $("#popup-verSolicitud").hide();
+                $("#btn_libre").hide();
+                $("#btn_ocupado").show();
+                $("#btn-menup").show();
+				 myApp.modal({
+				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
+				        text: "<div class='div-modal-notificacion'>"+"El cliente ha teminado servicio</div>",
+				        buttons: [{
+				                text: 'Ok',
+				                onClick: function () {
+				                	$.ajax({
+	                                    url: "http://bcodemexico.com/taxiApp2/Taxistas/actualiza_datos_viaje.php",
+	                                    type: 'POST',
+	                                    data: "estado=terminada&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=" + document.getElementById("txt_direccion_ubicacion_cliente").value + "&destino=" + destino_temporal + "&costo=" + document.getElementById("txt_costo_viaje").value,
+	                                    success: function (data, textStatus, jqXHR) {	
+	                                        myApp.popup('.popup-calificacion-cliente');
+	                                        clearInterval(servicio_sttsid);
+			                                buscar_peticiones();
+			                                borrar_marcas();
+	                                    },
+	                                    error: function (jqXHR, textStatus, errorThrown) {
+	                                        console.log(textStatus);
+	                                    }
+	                                });
+                                
+				                }
+				            }]
+				    });
+				 
+				//terminar_servicio();
             	/*
                 clearInterval(intervalo_stts_servicio);
                 intervalo_stts_servicio = undefined;
