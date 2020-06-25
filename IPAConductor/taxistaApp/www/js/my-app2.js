@@ -598,6 +598,7 @@ function servicio_stts() {
             } else if (data.trim() === "terminada") {
 				// myApp.alert('¡El cliente ha teminado servicio!', 'Servicio cancelado');
 				 actualiza_estatus_taxi('libre'); 
+				 clearInterval(servicio_sttsid);
                 $("#btn_recoger_cliente").hide();
                 $("#opcion_inicio").show();
                 $("#popup-verSolicitud").hide();
