@@ -596,7 +596,16 @@ function servicio_stts() {
                 $("#btn-menup").show();
                 buscar_peticiones();
             } else if (data.trim() === "terminada") {
-				 myApp.alert('¡El cliente ha cancelado el servicio!', 'Servicio cancelado');
+				 myApp.alert('¡El cliente ha teminado servicio!', 'Servicio cancelado');
+				 actualiza_estatus_taxi('libre'); 
+                clearInterval(servicio_sttsid);
+				 $("#btn_recoger_cliente").hide();
+                $("#opcion_inicio").show();
+                $("#popup-verSolicitud").hide();
+                $("#btn_libre").hide();
+                $("#btn_ocupado").show();
+                $("#btn-menup").show();
+                buscar_peticiones();
             	/*
                 clearInterval(intervalo_stts_servicio);
                 intervalo_stts_servicio = undefined;
