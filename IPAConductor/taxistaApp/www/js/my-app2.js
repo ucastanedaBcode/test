@@ -252,7 +252,7 @@ function modal_solicitud(latitud_ubicacion_cliente,longitud_ubicacion_cliente,la
         } else {
             document.getElementById("ubicacion_cliente").value = document.getElementById("txt_texto_direccion_ubicacion_cliente").value;
         }
-        //revisar_cancelacion();
+        revisar_cancelacion();
 }
 function ubicacion_unidad() {
     /*
@@ -516,7 +516,7 @@ function trazar_ruta() {
             window.alert('No se pudo establecer la ruta' + status);
         }
     });
-	}, 500);
+	}, 5000);
 }
 function rechazar_solicitud_view() {
     myApp.modal({
@@ -596,6 +596,7 @@ function servicio_stts() {
                 $("#btn-menup").show();
                 buscar_peticiones();
             } else if (data.trim() === "terminada") {
+				 myApp.alert('¡El cliente ha cancelado el servicio!', 'Servicio cancelado');
             	/*
                 clearInterval(intervalo_stts_servicio);
                 intervalo_stts_servicio = undefined;
