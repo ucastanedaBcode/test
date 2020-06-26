@@ -750,6 +750,82 @@ function terminar_servicio() {
         }
     });
 }
+
+function Cancelar_servicio() {
+    $("#btn_terminar_servicio").attr('disabled','disabled');
+	$("#btn_cancelar_servicio").attr('disabled','disabled');
+	var destino_temporal="";  
+    myApp.showPreloader("Terminando Servicio...");
+    $.ajax({
+        url: "http://bcodemexico.com/taxiApp2/Taxistas/terminar_viaje.php",
+        type: 'POST',
+        data: "id_peticion=" + $("#id_solicitud_servicio").val() + "&lat_destino=" + ubicacion_taxi_lat + "&lng_destino=" + ubicacion_taxi_lng,
+        success: function (data, textStatus, jqXHR) {
+
+        	document.getElementById("btn-menup").style.display="block";
+            var latlng;
+            latlng = new google.maps.LatLng(ubicacion_taxi_lat, ubicacion_taxi_lng);
+            geocoder1.geocode({'latLng': latlng}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        document.getElementById("destino_cliente").value = results[0].formatted_address;
+                        document.getElementById("txt_direccion_destino_cliente").value = results[0].formatted_address;
+                        destino_temporal = results[0].formatted_address;
+                    } 
+                    else {
+                        console.log("Ocurrio un error en formato de dirección destino");
+                    	document.getElementById("destino_cliente").value = "Direccion No Registrada";
+                        document.getElementById("txt_direccion_destino_cliente").value = "Direccion No Registrada";
+                        destino_temporal = "Direccion No Registrada";
+                    }
+                	document.getElementById("txt_destino").value = "";
+                    myApp.hidePreloader();
+                    $("#btn_terminar_servicio").attr('disabled',false);
+                   	$("#btn_terminar_servicio").hide();
+					$("#btn_cancelar_servicio").attr('disabled',false);
+					$("#btn_cancelar_servicio").hide();
+                    document.getElementById("btn_libre").style.display = "none";
+                    document.getElementById("btn_ocupado").style.display ="block";
+                    actualiza_estatus_taxi('libre');
+                    myApp.modal({
+				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
+				        text: "<div class='div-modal-notificacion'>"+"Has llegado al destino</div>",
+				        buttons: [{
+				                text: 'Ok',
+				                onClick: function () {
+				                	$.ajax({
+	                                    url: "http://bcodemexico.com/taxiApp2/Taxistas/actualiza_datos_viaje.php",
+	                                    type: 'POST',
+	                                    data: "estado=terminada&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=" + document.getElementById("txt_direccion_ubicacion_cliente").value + "&destino=" + destino_temporal + "&costo=0" ,
+	                                    success: function (data, textStatus, jqXHR) {	
+	                                        myApp.popup('.popup-calificacion-cliente');
+	                                        clearInterval(servicio_sttsid);
+			                                buscar_peticiones();
+			                                borrar_marcas();
+	                                    },
+	                                    error: function (jqXHR, textStatus, errorThrown) {
+	                                        console.log(textStatus);
+	                                    }
+	                                });
+                                
+				                }
+				            }]
+				    });
+                } 
+                else {
+                    console.log('Ocurrio un problema con maps ' + status);
+                }
+            });
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $("#btn_terminar_servicio").attr('disabled',false);
+        	myApp.hidePreloader();
+        	myApp.alert("Ocurrio un error en la conexion, intenta más tarde", "Error");
+            console.log(textStatus);
+        }
+    });
+}
 /*
 function terminar_servicio() {
     document.getElementById("btn-menup").style.display="block";
@@ -1286,8 +1362,9 @@ function revision_estado(){
                     $("#btn_recoger_cliente").attr('disabled',false);
                     document.getElementById("btn_recoger_cliente").style.display = "block";
 					//+++++
-					$("#btn_cancelar_servicio2").attr('disabled',false);
-                    document.getElementById("btn_cancelar_servicio2").style.display = "block";
+					$("#btn_cancelar_servicio").attr('disabled',false);
+                    document.getElementById("btn_cancelar_servicio").style.display = "block";
+					$("#btn_cancelar_servicio").show();
 					
                     document.getElementById("btn_libre").style.display = "none";
                     document.getElementById("btn_ocupado").style.display ="none";
