@@ -465,10 +465,16 @@ function aceptar_solicitud_entrante() {
 			        document.getElementById("txt_destino").value = document.getElementById("txt_texto_direccion_ubicacion_cliente").value;
 			        $("#btn_recoger_cliente").attr('disabled',false);
 			        document.getElementById("btn_recoger_cliente").style.display = "block";
+					$("#btn_cancelar_servicio").attr('disabled',false);
+                    document.getElementById("btn_cancelar_servicio").style.display = "block";
+					$("#btn_cancelar_servicio").show();
 			    } else {
 			        document.getElementById("txt_destino").value = document.getElementById("txt_texto_direccion_ubicacion_cliente").value;
 			        $("#btn_recoger_cliente").attr('disabled',false);
 			        document.getElementById("btn_recoger_cliente").style.display = "block";
+					$("#btn_cancelar_servicio").attr('disabled',false);
+                    document.getElementById("btn_cancelar_servicio").style.display = "block";
+					$("#btn_cancelar_servicio").show();
 			    }
                 myApp.hidePreloader();
 			    //myApp.closeModal(".popup-verSolicitud");
@@ -752,7 +758,7 @@ function terminar_servicio() {
 }
 
 function Cancelar_servicio() {
-    $("#btn_terminar_servicio").attr('disabled','disabled');
+ 
 	$("#btn_cancelar_servicio").attr('disabled','disabled');
 	var destino_temporal="";  
     myApp.showPreloader("Terminando Servicio...");
@@ -789,16 +795,16 @@ function Cancelar_servicio() {
                     actualiza_estatus_taxi('libre');
                     myApp.modal({
 				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
-				        text: "<div class='div-modal-notificacion'>"+"Has llegado al destino</div>",
+				        text: "<div class='div-modal-notificacion'>"+"Servicio Cancelado</div>",
 				        buttons: [{
 				                text: 'Ok',
 				                onClick: function () {
 				                	$.ajax({
 	                                    url: "http://bcodemexico.com/taxiApp2/Taxistas/actualiza_datos_viaje.php",
 	                                    type: 'POST',
-	                                    data: "estado=terminada&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=" + document.getElementById("txt_direccion_ubicacion_cliente").value + "&destino=" + destino_temporal + "&costo=0" ,
+	                                    data: "estado=terminada&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=&destino=" + destino_temporal + "&costo=0" ,
 	                                    success: function (data, textStatus, jqXHR) {	
-	                                        myApp.popup('.popup-calificacion-cliente');
+	                                       
 	                                        clearInterval(servicio_sttsid);
 			                                buscar_peticiones();
 			                                borrar_marcas();
@@ -813,6 +819,40 @@ function Cancelar_servicio() {
 				    });
                 } 
                 else {
+					document.getElementById("txt_destino").value = "";
+                    myApp.hidePreloader();
+                    $("#btn_terminar_servicio").attr('disabled',false);
+                   	$("#btn_terminar_servicio").hide();
+					$("#btn_cancelar_servicio").attr('disabled',false);
+					$("#btn_cancelar_servicio").hide();
+                    document.getElementById("btn_libre").style.display = "none";
+                    document.getElementById("btn_ocupado").style.display ="block";
+                    actualiza_estatus_taxi('libre');
+                    myApp.modal({
+				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
+				        text: "<div class='div-modal-notificacion'>"+"Servicio Cancelado</div>",
+				        buttons: [{
+				                text: 'Ok',
+				                onClick: function () {
+				                	$.ajax({
+	                                    url: "http://bcodemexico.com/taxiApp2/Taxistas/actualiza_datos_viaje.php",
+	                                    type: 'POST',
+	                                    data: "estado=terminada&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=&destino=" + destino_temporal + "&costo=0" ,
+	                                    success: function (data, textStatus, jqXHR) {	
+	                                   
+	                                        clearInterval(servicio_sttsid);
+			                                buscar_peticiones();
+			                                borrar_marcas();
+	                                    },
+	                                    error: function (jqXHR, textStatus, errorThrown) {
+	                                        console.log(textStatus);
+	                                    }
+	                                });
+                                
+				                }
+				            }]
+				    });
+					
                     console.log('Ocurrio un problema con maps ' + status);
                 }
             });
@@ -1377,7 +1417,7 @@ function revision_estado(){
                     $("#btn_terminar_servicio").show();
 					//+++++
 					$("#btn_cancelar_servicio").attr('disabled',false);
-					$("#btn_cancelar_servicio").show();
+					$("#btn_cancelar_servicio").hide();
                   
                     document.getElementById("btn_libre").style.display = "none";
                     document.getElementById("btn_ocupado").style.display ="none";
