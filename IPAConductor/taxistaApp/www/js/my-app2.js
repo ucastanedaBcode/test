@@ -802,7 +802,7 @@ function Cancelar_servicio() {
 				                	$.ajax({
 	                                    url: "http://bcodemexico.com/taxiApp2/Taxistas/actualiza_datos_viaje.php",
 	                                    type: 'POST',
-	                                    data: "estado=terminada&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=&destino=" + destino_temporal + "&costo=0" ,
+	                                    data: "estado=terminadaC&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=&destino=" + destino_temporal + "&costo=0" ,
 	                                    success: function (data, textStatus, jqXHR) {	
 	                                       
 	                                        clearInterval(servicio_sttsid);
