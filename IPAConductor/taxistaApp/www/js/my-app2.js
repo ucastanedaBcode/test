@@ -794,7 +794,7 @@ function Cancelar_servicio() {
                     document.getElementById("btn_ocupado").style.display ="block";
                     actualiza_estatus_taxi('libre');
                     myApp.modal({
-				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
+				        title: '<div style="font-size: 20px;font-weight: bold;">Cancelando</div>',
 				        text: "<div class='div-modal-notificacion'>"+"Servicio Cancelado</div>",
 				        buttons: [{
 				                text: 'Ok',
@@ -829,7 +829,7 @@ function Cancelar_servicio() {
                     document.getElementById("btn_ocupado").style.display ="block";
                     actualiza_estatus_taxi('libre');
                     myApp.modal({
-				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
+				        title: '<div style="font-size: 20px;font-weight: bold;">Cancelando</div>',
 				        text: "<div class='div-modal-notificacion'>"+"Servicio Cancelado</div>",
 				        buttons: [{
 				                text: 'Ok',
