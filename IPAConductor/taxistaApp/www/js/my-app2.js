@@ -599,31 +599,7 @@ function servicio_stts() {
 				 myApp.alert('¡El cliente ha teminado servicio!', 'Servicio cancelado');
 				 actualiza_estatus_taxi('libre'); 
 				 clearInterval(servicio_sttsid);
-               /*
-				 myApp.modal({
-				        title: '<div style="font-size: 20px;font-weight: bold;">Llegaste</div>',
-				        text: "<div class='div-modal-notificacion'>"+"El cliente ha teminado servicio</div>",
-				        buttons: [{
-				                text: 'Ok',
-				                onClick: function () {
-				                	$.ajax({
-	                                    url: "http://bcodemexico.com/taxiApp2/Taxistas/actualiza_datos_viaje.php",
-	                                    type: 'POST',
-	                                    data: "estado=terminada&id_peticion=" + $("#id_solicitud_servicio").val() + "&ubicacion=" + document.getElementById("txt_direccion_ubicacion_cliente").value + "&destino=" + destino_temporal + "&costo=" + document.getElementById("txt_costo_viaje").value,
-	                                    success: function (data, textStatus, jqXHR) {	
-	                                      
-	                                        clearInterval(servicio_sttsid);
-			                                buscar_peticiones();
-			                                borrar_marcas();
-	                                    },
-	                                    error: function (jqXHR, textStatus, errorThrown) {
-	                                        console.log(textStatus);
-	                                    }
-	                                });
-                                
-				                }
-				            }]
-				    });*/
+            
 					 $("#btn_recoger_cliente").hide();
                 $("#opcion_inicio").show();
                 $("#popup-verSolicitud").hide();
@@ -1310,8 +1286,8 @@ function revision_estado(){
                     $("#btn_recoger_cliente").attr('disabled',false);
                     document.getElementById("btn_recoger_cliente").style.display = "block";
 					//+++++
-					$("#btn_cancelar_servicio").attr('disabled',false);
-                    document.getElementById("btn_cancelar_servicio").style.display = "block";
+					$("#btn_cancelar_servicio2").attr('disabled',false);
+                    document.getElementById("btn_cancelar_servicio2").style.display = "block";
 					
                     document.getElementById("btn_libre").style.display = "none";
                     document.getElementById("btn_ocupado").style.display ="none";
