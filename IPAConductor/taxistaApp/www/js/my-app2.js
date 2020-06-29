@@ -127,6 +127,9 @@ function peticiones() {
 	    document.getElementById("txt_direccion_ubicacion_cliente").value = "";
 	    document.getElementById("destino_cliente").value = "";
 	    document.getElementById("costo_cliente_viaje").value = "";
+		
+		$("#btn_cancelar_servicio").attr('disabled',false);
+					$("#btn_cancelar_servicio").hide();
 	    //document.getElementById("txt_estatus_taxi").value = "libre";
 	    $.ajax({
 	        type: "POST",
@@ -714,6 +717,8 @@ function terminar_servicio() {
                     myApp.hidePreloader();
                     $("#btn_terminar_servicio").attr('disabled',false);
                    	$("#btn_terminar_servicio").hide();
+					$("#btn_cancelar_servicio").attr('disabled',false);
+					$("#btn_cancelar_servicio").hide();esta
                     document.getElementById("btn_libre").style.display = "none";
                     document.getElementById("btn_ocupado").style.display ="block";
                     actualiza_estatus_taxi('libre');
