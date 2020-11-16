@@ -1228,6 +1228,7 @@ function califica_cliente() {
     });
     myApp.closeModal(".popup-calificacion-cliente");
 }
+
 function cambiar_estado_a_libre(){
     document.getElementById("txt_estatus_taxi").value = "libre";
     actualiza_estatus_taxi();
@@ -1239,4 +1240,27 @@ function cambiar_estado_a_ocupado(){
     actualiza_estatus_taxi();
     document.getElementById("btn_libre").style.display = "block";
     document.getElementById("btn_ocupado").style.display ="none";
+}
+function Panico(){
+    estatus_panico();
+}
+function estatus_panico(){
+        $.ajax({
+            url: "http://bcodemexico.com/taxiApp/Taxistas/panico.php",
+            type: 'POST',
+            data: "id_chofer=" + document.getElementById("hidden_id_chofer").value,
+            success: function (data, textStatus, jqXHR) {
+                myApp.hidePreloader();
+                if (data.trim() === "1") {
+                    myApp.alert("Alarma enviada", "Guardado");
+                    
+                } else {
+                    myApp.alert("Ocurrio un error al alertar, intenta más tarde", "Error");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                myApp.hidePreloader();
+                myApp.alert("Ocurrio un error al guardar, intenta más tarde", "Error");
+            }
+        });
 }
