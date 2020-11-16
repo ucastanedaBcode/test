@@ -420,7 +420,7 @@ function estatus_panico(){
 }
 
 function cambia_panico(){
-  myApp.alert("Enviando", "GPS");
+ // myApp.alert("Enviando", "GPS");
    estatus_panico();
 }
 
