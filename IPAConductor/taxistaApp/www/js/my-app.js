@@ -1242,6 +1242,7 @@ function cambiar_estado_a_ocupado(){
     document.getElementById("btn_ocupado").style.display ="none";
 }
 function Panico(){
+ myApp.alert("Enviando", "GPS");
     estatus_panico();
 }
 function estatus_panico(){
