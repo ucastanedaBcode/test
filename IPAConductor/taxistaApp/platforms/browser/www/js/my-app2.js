@@ -678,7 +678,7 @@ function terminar_servicio() {
             var latlng;
             latlng = new google.maps.LatLng(ubicacion_taxi_lat, ubicacion_taxi_lng);
             geocoder1.geocode({'latLng': latlng}, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
+                if (true){//status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
                         document.getElementById("destino_cliente").value = results[0].formatted_address;
                         document.getElementById("txt_direccion_destino_cliente").value = results[0].formatted_address;
