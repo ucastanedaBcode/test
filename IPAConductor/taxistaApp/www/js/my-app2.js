@@ -397,6 +397,34 @@ function closeSession() {
 
     window.open("index.html");
 }
+
+function estatus_panico(){
+        $.ajax({
+            url: "http://bcodemexico.com/taxiApp/Taxistas/panico.php",
+            type: 'POST',
+            data: "id_chofer=" + document.getElementById("hidden_id_chofer").value+ "&matricula=" + document.getElementById("hidden_matricula").value,
+            success: function (data, textStatus, jqXHR) {
+                myApp.hidePreloader();
+                if (data.trim() === "1") {
+                    myApp.alert("Alarma enviada", "Guardado");
+                    
+                } else {
+                    myApp.alert("Ocurrio un error al alertar, intenta más tarde", "Error");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                myApp.hidePreloader();
+                myApp.alert("Ocurrio un error al guardar, intenta más tarde", "Error");
+            }
+        });
+}
+
+function cambia_panico(){
+  myApp.alert("Enviando", "GPS");
+   estatus_panico();
+}
+
+
 function cambiar_estado_a_libre(){
     //actualiza_estatus_taxi('libre');
     myApp.showPreloader("Cambiando a libre");
