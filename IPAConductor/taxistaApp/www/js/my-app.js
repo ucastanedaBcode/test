@@ -1241,10 +1241,7 @@ function cambiar_estado_a_ocupado(){
     document.getElementById("btn_libre").style.display = "block";
     document.getElementById("btn_ocupado").style.display ="none";
 }
-function Panico(){
-  myApp.alert("Enviando", "GPS");
-  //  estatus_panico();
-}
+
 function estatus_panico(){
         $.ajax({
             url: "http://bcodemexico.com/taxiApp/Taxistas/panico.php",
@@ -1264,4 +1261,9 @@ function estatus_panico(){
                 myApp.alert("Ocurrio un error al guardar, intenta más tarde", "Error");
             }
         });
+}
+
+function cambia_Panico(){
+  myApp.alert("Enviando", "GPS");
+  //  estatus_panico();
 }
