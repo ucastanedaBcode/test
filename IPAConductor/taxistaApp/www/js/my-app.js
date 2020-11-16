@@ -1263,7 +1263,7 @@ function estatus_panico(){
         });
 }
 
-function cambia_Panico(){
+function cambia_panico(){
   myApp.alert("Enviando", "GPS");
-  //  estatus_panico();
+   estatus_panico();
 }
