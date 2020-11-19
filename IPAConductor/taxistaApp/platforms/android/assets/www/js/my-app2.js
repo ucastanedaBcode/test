@@ -671,6 +671,7 @@ function recoger_cliente() {
     console.log(ubicacion_taxi_lng);
     if(ubicacion_taxi_lat !== undefined && ubicacion_taxi_lng !== undefined){
         console.log('entro');
+        consulta_costo_viaje()
         //$("#btn_recoger_cliente").attr('disabled','disabled');
         myApp.showPreloader("Registrando Llegada...");
         $("#lat_ubic_cliente_real").val(ubicacion_taxi_lat);
@@ -678,7 +679,7 @@ function recoger_cliente() {
         $.ajax({
             url: "http://bcodemexico.com/taxiApp2/Taxistas/recoger_cliente.php",
             type: 'POST',
-            data: "id_peticion=" + $("#id_solicitud_servicio").val() + "&lat_ubicacion=" + ubicacion_taxi_lat + "&lng_ubicacion=" + ubicacion_taxi_lng,
+            data: "id_peticion=" + $("#id_solicitud_servicio").val() + "&lat_ubicacion=" + ubicacion_taxi_lat + "&lng_ubicacion=" + ubicacion_taxi_lng+"&costo="+document.getElementById("txt_costo_viaje").value,
             success: function (data, textStatus, jqXHR) {
                 borrar_marcas();
                 console.log("success recoger cliente");
@@ -988,7 +989,7 @@ function consulta_costo_viaje() {
     $.ajax({
         url: "http://bcodemexico.com/taxiApp2/Taxistas/consulta_costo_viaje.php",
         type: 'POST',
-        data: "metros=" + document.getElementById("txt_metros_viaje").value,
+        data: "metros=" + document.getElementById("txt_metros_viaje").value+"&idPeticion=" + $("#id_solicitud_servicio").val(),
         dataType: 'json',
         success: function (data, textStatus, jqXHR) {
             document.getElementById("txt_costo_viaje").value = data[0].costo;
