@@ -989,7 +989,7 @@ function consulta_costo_viaje() {
     $.ajax({
         url: "http://bcodemexico.com/taxiApp2/Taxistas/consulta_costo_viaje.php",
         type: 'POST',
-        data: "metros=" + document.getElementById("txt_metros_viaje").value,
+        data: "metros=" + document.getElementById("txt_metros_viaje").value+"&idPeticion=" + $("#id_solicitud_servicio").val(),
         dataType: 'json',
         success: function (data, textStatus, jqXHR) {
             document.getElementById("txt_costo_viaje").value = data[0].costo;
